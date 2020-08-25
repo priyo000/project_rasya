@@ -29,7 +29,7 @@ router.get('/:id', function(req, res, next) {
 router.post('/baru', function(req, res, next) {
   var sumber = req.body.sumber;
   var kategori = req.body.kategori;
-  var sql = `INSERT INTO sumber (sumber,kategori) values ("${sumber}"."${kategori}");`
+  var sql = `INSERT INTO sumber (sumber,kategori) values ("${sumber}","${kategori}");`
   db.query(sql, function(err, result){
     if (err) {
       res.status(500).send({ error: 'Gagal Input Data Data Sumber'})

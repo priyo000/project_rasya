@@ -28,7 +28,7 @@ app.use('/users', usersRouter);
 app.use('/kategori', kategoriRouter);
 app.use('/role', roleRouter);
 app.use('/kurir', kurirRouter);
-app.use('/sumber', kurirRouter);
+app.use('/sumber', sumberRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
