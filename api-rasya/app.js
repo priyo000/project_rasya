@@ -10,6 +10,8 @@ var kategoriRouter = require('./routes/kategori');
 var roleRouter = require('./routes/role');
 var kurirRouter = require('./routes/kurir');
 var sumberRouter = require('./routes/sumber');
+var barangRouter = require('./routes/barang');
+var transaksiRouter = require('./routes/transaksi');
 
 var app = express();
 
@@ -29,6 +31,8 @@ app.use('/kategori', kategoriRouter);
 app.use('/role', roleRouter);
 app.use('/kurir', kurirRouter);
 app.use('/sumber', sumberRouter);
+app.use('/barang', barangRouter);
+app.use('/transaksi', transaksiRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
