@@ -44,24 +44,37 @@ router.get('/search', function(req, res, next) {
 })
 
 
-router.post('/baru', function(req, res, next) {
-  var nama_customer = req.body.nama_customer;
-  var alamat = req.body.alamat;
-  var no_hp = req.body.no_hp;
-  var id_kurir = req.body.id_kurir;
-  var ongkir = req.body.ongkir;
-  var id_sumber = req.body.id_sumber;
+// router.post('/baru', function(req, res, next) {
+//   var nama_customer = req.body.nama_customer;
+//   var alamat = req.body.alamat;
+//   var no_hp = req.body.no_hp;
+//   var id_kurir = req.body.id_kurir;
+//   var ongkir = req.body.ongkir;
+//   var id_sumber = req.body.id_sumber;
+//   var id_user = req.body.id_user;
+//   var packer = req.body.packer;
+//   var waktu_input = req.body.waktu_input;
+//   var sql = `INSERT INTO transaksi (nama_customer,alamat,no_hp,id_kurir,ongkir,id_sumber,id_user,packer,waktu_input) values ("${nama_customer}","${alamat}","${no_hp}","${id_kurir}","${ongkir}","${id_sumber}","${id_user}","${packer}","${waktu_input}");`;
+//   db.query(sql, function(err, result){
+//     if (err) {
+//       res.status(500).send({ error: 'Gagal Input Data Transaksi'})
+//     }
+//     res.json({'status':'Input data Transaksi Berhasil'})
+//   })
+//
+// })
+
+router.post('/baru',function(req, res, next) {
   var id_user = req.body.id_user;
-  var packer = req.body.packer;
-  var waktu_input = req.body.waktu_input;
-  var sql = `INSERT INTO transaksi (nama_customer,alamat,no_hp,id_kurir,ongkir,id_sumber,id_user,packer,waktu_input) values ("${nama_customer}","${alamat}","${no_hp}","${id_kurir}","${ongkir}","${id_sumber}","${id_user}","${packer}","${waktu_input}");`;
+  var id_sumber = req.body.id_sumber;
+
+  var sql = `INSERT INTO transaksi (id_user,id_sumber) VALUES ("${id_user}","${id_sumber}");`;
   db.query(sql, function(err, result){
     if (err) {
-      res.status(500).send({ error: 'Gagal Input Data Transaksi'})
+      res.status(500).send({ error: 'Error new Order'})
     }
-    res.json({'status':'Input data Transaksi Berhasil'})
+    res.json(result.insertId)
   })
-
 })
 
 router.put('/status/:id/:status', function(req, res, next) {
@@ -89,16 +102,23 @@ router.put('/pembayaran/:id/:pembayaran', function(req, res, next) {
   })
 })
 
-// router.delete('/hapus/:kode_barang', function(req, res, next) {
-//   var kode_barang = req.params.kode_barang;
-//   var sql = `DELETE FROM barang WHERE kode_barang="${kode_barang}";`;
-//   db.query(sql, function(err, result) {
-//     if(err){
-//       res.status(500).send({error: 'Gagal Hapus Data Barang'})
-//     }
-//     res.json({'status':'Berhasil Hapus Data Barang'})
-//   })
-//
-// })
+router.delete('/hapus/:id_transaksi', function(req, res, next) {
+  var id_transaksi = req.params.id_transaksi;
+  var sql = `DELETE FROM detail_transaksi WHERE id_transaksi="${id_transaksi}";`;
+  var sql2 = `DELETE FROM transaksi WHERE id_transaksi="${id_transaksi}";`;
+  db.query(sql, function(err, result) {
+    if(err){
+      res.status(500).send({error: 'Pembatalan Transaksi Gagal.'})
+    }
+    db.query(sql2, function(err, result) {
+      if(err){
+        res.status(500).send({error: 'Pembatalan Transaksi Gagal..'})
+      }
+      res.json({'status':'Pembatalan Transaksi Sukses'})
+    })
+    // res.json({'status':'Batal Membuat Transaksi'})
+  })
+
+})
 
 module.exports = router;
