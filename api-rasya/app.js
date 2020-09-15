@@ -13,6 +13,8 @@ var sumberRouter = require('./routes/sumber');
 var barangRouter = require('./routes/barang');
 var transaksiRouter = require('./routes/transaksi');
 var detail_transaksiRouter = require('./routes/detail_transaksi');
+var iklanRouter = require('./routes/iklan');
+var riwayat_iklanRouter = require('./routes/riwayat_iklan');
 
 var app = express();
 
@@ -35,6 +37,8 @@ app.use('/sumber', sumberRouter);
 app.use('/barang', barangRouter);
 app.use('/transaksi', transaksiRouter);
 app.use('/detail_transaksi', detail_transaksiRouter);
+app.use('/iklan', iklanRouter);
+app.use('/riwayat_iklan', riwayat_iklanRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
