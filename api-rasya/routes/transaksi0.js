@@ -59,7 +59,7 @@ router.post('/baru',function(req, res, next) {
 
 router.put('/status/:id/:status', function(req, res, next) {
   var id = req.params.id;
-  var status = req.params.status;
+  var status = req.status;
   var sql = `UPDATE transaksi SET status="${status}" WHERE id_transaksi="${id}";`;
   db.query(sql, function(err, result){
     if (err){
@@ -71,8 +71,8 @@ router.put('/status/:id/:status', function(req, res, next) {
 
 router.put('/pembayaran/:id/:pembayaran', function(req, res, next) {
   var id = req.params.id;
-  var pembayaran = req.params.pembayaran;
-  var bukti_tf = req.body.bukti_tf;
+  var pembayaran = req.pembayaran;
+  var bukti_tf = body.bukti_tf;
   var sql = `UPDATE transaksi SET pembayaran="${pembayaran}", bukti_tf="${bukti_tf}" WHERE id_transaksi="${id}";`;
   db.query(sql, function(err, result){
     if (err){
@@ -82,20 +82,20 @@ router.put('/pembayaran/:id/:pembayaran', function(req, res, next) {
   })
 })
 
-router.put('/simpan/:id', function(req, res, next) {
+router.put('/simpan', function(req, res, next) {
   var id = req.params.id;
-  var nama_customer = req.body.nama_customer;
-  var alamat = req.body.alamat;
-  var no_hp = req.body.no_hp;
-  var pembayaran = req.body.pembayaran;
-  var ongkir = req.body.ongkir;
-  var id_kurir = req.body.id_kurir;
+  var nama_customer = req.nama_customer;
+  var alamat = body.alamat;
+  var no_hp = body.no_hp;
+  var pembayaran = body.pembayaran;
+  var ongkir = body.ongkir;
+  var id_kurir = body.id_kurir;
   var sql = `UPDATE transaksi SET waktu_input=NOW(),nama_customer="${nama_customer}",alamat="${alamat}",no_hp="${no_hp}",status="PROSES",ongkir="${ongkir}",pembayaran="${pembayaran}",id_kurir=${id_kurir} WHERE id_transaksi="${id}";`;
   db.query(sql, function(err, result){
     if (err){
-      res.status(500).send({ error: 'Gagal Simpan Transaksi'})
+      res.status(500).send({ error: 'Gagal Update Data Status Pembayaran'})
     }
-    res.json({'status':'Sukses Simpan Transaksi'})
+    res.json({'status':'Sukses Update Status Pembayaran'})
   })
 })
 
